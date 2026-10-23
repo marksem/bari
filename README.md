@@ -14,6 +14,8 @@ Background and Experience: Participants shouldn’t have to be too technical. So
 
 ## Web Resources:
 
+- **Protege Desktop**: be sure to download and install before the tutorial from here:  https://protege.stanford.edu/
+
 - **gist** upper ontology: https://w3id.org/semanticarts/ontology/gistCore14.1.0.ttl
     - also at: https://ontologies.semanticarts.com/ontology/gistCore14.1.0.ttl
     - latest version: https://ontologies.semanticarts.com/ontology/gistCore.ttl
