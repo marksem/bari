@@ -9,33 +9,36 @@
 <http://semanticarts.com/ont/bari> rdf:type owl:Ontology ;
                                     owl:versionIRI <http://semanticarts.com/ont/bari0.1.0> ;
                                     owl:imports <https://w3id.org/semanticarts/ontology/gistCore14.1.0> ;
-                                    rdfs:comment "Demo ontology from ISWC 2026 Tutorial" .
+                                    rdfs:comment "ISWC Tutorial" .
 
 #################################################################
 #    Object Properties
 #################################################################
 
+###  http://semanticarts.com/ont/bari/biologicalFatherOf
+:biologicalFatherOf rdf:type owl:ObjectProperty ;
+                    owl:inverseOf :hasBiologicalFather .
+
+
 ###  http://semanticarts.com/ont/bari/buys
 :buys rdf:type owl:ObjectProperty ;
       rdfs:subPropertyOf <https://w3id.org/semanticarts/ns/ontology/gist/owns> ;
-      rdfs:domain <https://w3id.org/semanticarts/ns/ontology/gist/Person> .
+      rdfs:domain <https://w3id.org/semanticarts/ns/ontology/gist/Person> ;
+      rdfs:range :Dog .
 
 
 ###  http://semanticarts.com/ont/bari/hasAncestor
-:hasAncestor rdf:type owl:ObjectProperty ,
-                      owl:TransitiveProperty .
+:hasAncestor rdf:type owl:ObjectProperty .
 
 
 ###  http://semanticarts.com/ont/bari/hasBiologicalFather
 :hasBiologicalFather rdf:type owl:ObjectProperty ;
-                     rdfs:subPropertyOf <https://w3id.org/semanticarts/ns/ontology/gist/hasBiologicalParent> ;
-                     rdf:type owl:FunctionalProperty .
+                     rdfs:subPropertyOf <https://w3id.org/semanticarts/ns/ontology/gist/hasBiologicalParent> .
 
 
 ###  http://semanticarts.com/ont/bari/hasBiologicalMother
 :hasBiologicalMother rdf:type owl:ObjectProperty ;
-                     rdfs:subPropertyOf <https://w3id.org/semanticarts/ns/ontology/gist/hasBiologicalParent> ;
-                     rdf:type owl:FunctionalProperty .
+                     rdfs:subPropertyOf <https://w3id.org/semanticarts/ns/ontology/gist/hasBiologicalParent> .
 
 
 ###  https://w3id.org/semanticarts/ns/ontology/gist/hasBiologicalParent
@@ -48,64 +51,27 @@
 
 ###  http://semanticarts.com/ont/bari/Dog
 :Dog rdf:type owl:Class ;
-     rdfs:subClassOf <https://w3id.org/semanticarts/ns/ontology/gist/LivingThing> ;
-     owl:disjointWith <https://w3id.org/semanticarts/ns/ontology/gist/Building> ;
-     rdfs:label "Dog" ;
-     <http://www.w3.org/2004/02/skos/core#altLabel> "Canis Familiaris" .
+     rdfs:subClassOf <https://w3id.org/semanticarts/ns/ontology/gist/LivingThing> .
 
 
-###  http://semanticarts.com/ont/bari/Ethnicity
-:Ethnicity rdf:type owl:Class ;
-           rdfs:subClassOf <https://w3id.org/semanticarts/ns/ontology/gist/Category> .
-
-
-###  http://semanticarts.com/ont/bari/HasNativeAmericanAncestry
-:HasNativeAmericanAncestry rdf:type owl:Class ;
-                           owl:equivalentClass [ owl:intersectionOf ( <https://w3id.org/semanticarts/ns/ontology/gist/Person>
-                                                                      [ rdf:type owl:Restriction ;
-                                                                        owl:onProperty :hasAncestor ;
-                                                                        owl:someValuesFrom [ rdf:type owl:Restriction ;
-                                                                                             owl:onProperty <https://w3id.org/semanticarts/ns/ontology/gist/isCategorizedBy> ;
-                                                                                             owl:hasValue :_Ethnicity_NativeAmerican
-                                                                                           ]
-                                                                      ]
-                                                                    ) ;
-                                                 rdf:type owl:Class
-                                               ] .
+###  http://semanticarts.com/ont/bari/DogOrPerson
+:DogOrPerson rdf:type owl:Class ;
+             owl:equivalentClass [ rdf:type owl:Class ;
+                                   owl:unionOf ( :Dog
+                                                 <https://w3id.org/semanticarts/ns/ontology/gist/Person>
+                                               )
+                                 ] .
 
 
 ###  http://semanticarts.com/ont/bari/HumanBiologicalFather
 :HumanBiologicalFather rdf:type owl:Class ;
                        owl:equivalentClass [ owl:intersectionOf ( <https://w3id.org/semanticarts/ns/ontology/gist/Person>
                                                                   [ rdf:type owl:Restriction ;
-                                                                    owl:onProperty [ owl:inverseOf :hasBiologicalFather
-                                                                                   ] ;
+                                                                    owl:onProperty :biologicalFatherOf ;
                                                                     owl:someValuesFrom <https://w3id.org/semanticarts/ns/ontology/gist/Person>
                                                                   ]
                                                                 ) ;
                                              rdf:type owl:Class
-                                           ] .
-
-
-###  http://semanticarts.com/ont/bari/HumanBiologicalMother
-:HumanBiologicalMother rdf:type owl:Class ;
-                       owl:equivalentClass [ owl:intersectionOf ( <https://w3id.org/semanticarts/ns/ontology/gist/Person>
-                                                                  [ rdf:type owl:Restriction ;
-                                                                    owl:onProperty [ owl:inverseOf :hasBiologicalMother
-                                                                                   ] ;
-                                                                    owl:someValuesFrom <https://w3id.org/semanticarts/ns/ontology/gist/Person>
-                                                                  ]
-                                                                ) ;
-                                             rdf:type owl:Class
-                                           ] .
-
-
-###  http://semanticarts.com/ont/bari/HumanBiologicalParent
-:HumanBiologicalParent rdf:type owl:Class ;
-                       owl:equivalentClass [ rdf:type owl:Class ;
-                                             owl:unionOf ( :HumanBiologicalFather
-                                                           :HumanBiologicalMother
-                                                         )
                                            ] .
 
 
@@ -113,89 +79,69 @@
 #    Individuals
 #################################################################
 
-###  http://semanticarts.com/ont/bari/_David
-:_David rdf:type owl:NamedIndividual ,
-                 <https://w3id.org/semanticarts/ns/ontology/gist/Person> ;
-        :hasBiologicalFather :_Mark ;
-        :hasBiologicalMother :_Judi ,
-                             :_Judith .
+###  http://semanticarts.com/ont/bari/_Andy
+:_Andy rdf:type owl:NamedIndividual ,
+                <https://w3id.org/semanticarts/ns/ontology/gist/Person> ;
+       :hasBiologicalFather :_Bob ;
+       :hasBiologicalMother :_Betty .
 
 
-###  http://semanticarts.com/ont/bari/_Dino
-:_Dino rdf:type owl:NamedIndividual ,
+###  http://semanticarts.com/ont/bari/_Astro
+:_Astro rdf:type owl:NamedIndividual ,
+                 :Dog ;
+        :hasBiologicalFather :_Bear ;
+        :hasBiologicalMother :_Belle .
+
+
+###  http://semanticarts.com/ont/bari/_Bear
+:_Bear rdf:type owl:NamedIndividual ,
                 :Dog .
 
 
-###  http://semanticarts.com/ont/bari/_Ethnicity_Asian
-:_Ethnicity_Asian rdf:type owl:NamedIndividual ,
-                           :Ethnicity .
+###  http://semanticarts.com/ont/bari/_Belle
+:_Belle rdf:type owl:NamedIndividual ,
+                 :Dog ;
+        :hasBiologicalFather :_Comet ;
+        :hasBiologicalMother :_Chloe .
 
 
-###  http://semanticarts.com/ont/bari/_Ethnicity_NativeAmerican
-:_Ethnicity_NativeAmerican rdf:type owl:NamedIndividual ,
-                                    :Ethnicity .
+###  http://semanticarts.com/ont/bari/_Betty
+:_Betty rdf:type owl:NamedIndividual ,
+                 <https://w3id.org/semanticarts/ns/ontology/gist/Person> ;
+        :buys :_House_1 .
 
 
-###  http://semanticarts.com/ont/bari/_Ethnicity_PacificIslander
-:_Ethnicity_PacificIslander rdf:type owl:NamedIndividual ,
-                                     :Ethnicity .
+###  http://semanticarts.com/ont/bari/_Bob
+:_Bob rdf:type owl:NamedIndividual ,
+               <https://w3id.org/semanticarts/ns/ontology/gist/Person> ;
+      :buys :_Astro ;
+      :hasBiologicalFather :_Carl .
 
 
-###  http://semanticarts.com/ont/bari/_Fido
-:_Fido rdf:type owl:NamedIndividual ,
-                :Dog ;
-       :hasBiologicalFather :_Dino ;
-       :hasBiologicalMother :_Mabel .
+###  http://semanticarts.com/ont/bari/_Carl
+:_Carl rdf:type owl:NamedIndividual ,
+                <https://w3id.org/semanticarts/ns/ontology/gist/Person> ;
+       :hasBiologicalFather :_Dan .
 
 
-###  http://semanticarts.com/ont/bari/_Grammy
-:_Grammy rdf:type owl:NamedIndividual ,
-                  :Dog .
+###  http://semanticarts.com/ont/bari/_Chloe
+:_Chloe rdf:type owl:NamedIndividual ,
+                 :Dog .
 
 
-###  http://semanticarts.com/ont/bari/_Gramps
-:_Gramps rdf:type owl:NamedIndividual ,
-                  :Dog .
+###  http://semanticarts.com/ont/bari/_Comet
+:_Comet rdf:type owl:NamedIndividual ,
+                 :Dog .
+
+
+###  http://semanticarts.com/ont/bari/_Dan
+:_Dan rdf:type owl:NamedIndividual ,
+               <https://w3id.org/semanticarts/ns/ontology/gist/Person> .
 
 
 ###  http://semanticarts.com/ont/bari/_House_1
 :_House_1 rdf:type owl:NamedIndividual ,
                    <https://w3id.org/semanticarts/ns/ontology/gist/Building> .
-
-
-###  http://semanticarts.com/ont/bari/_Judi
-:_Judi rdf:type owl:NamedIndividual ,
-                <https://w3id.org/semanticarts/ns/ontology/gist/Person> ;
-       :buys :_House_1 .
-
-
-###  http://semanticarts.com/ont/bari/_Judith
-:_Judith rdf:type owl:NamedIndividual ,
-                  <https://w3id.org/semanticarts/ns/ontology/gist/Person> .
-
-
-###  http://semanticarts.com/ont/bari/_Lew
-:_Lew rdf:type owl:NamedIndividual ,
-               <https://w3id.org/semanticarts/ns/ontology/gist/Person> ;
-      :hasBiologicalFather :_Lew_Sr .
-
-
-###  http://semanticarts.com/ont/bari/_Lew_Sr
-:_Lew_Sr rdf:type owl:NamedIndividual ,
-                  <https://w3id.org/semanticarts/ns/ontology/gist/Person> ;
-         <https://w3id.org/semanticarts/ns/ontology/gist/isCategorizedBy> :_Ethnicity_NativeAmerican .
-
-
-###  http://semanticarts.com/ont/bari/_Mabel
-:_Mabel rdf:type owl:NamedIndividual ,
-                 :Dog .
-
-
-###  http://semanticarts.com/ont/bari/_Mark
-:_Mark rdf:type owl:NamedIndividual ,
-                <https://w3id.org/semanticarts/ns/ontology/gist/Person> ;
-       :buys :_Fido ;
-       :hasBiologicalFather :_Lew .
 
 
 ###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi
