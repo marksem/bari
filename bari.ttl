@@ -28,17 +28,20 @@
 
 
 ###  http://semanticarts.com/ont/bari/hasAncestor
-:hasAncestor rdf:type owl:ObjectProperty .
+:hasAncestor rdf:type owl:ObjectProperty ,
+                      owl:TransitiveProperty .
 
 
 ###  http://semanticarts.com/ont/bari/hasBiologicalFather
 :hasBiologicalFather rdf:type owl:ObjectProperty ;
-                     rdfs:subPropertyOf <https://w3id.org/semanticarts/ns/ontology/gist/hasBiologicalParent> .
+                     rdfs:subPropertyOf <https://w3id.org/semanticarts/ns/ontology/gist/hasBiologicalParent> ;
+                     rdf:type owl:FunctionalProperty .
 
 
 ###  http://semanticarts.com/ont/bari/hasBiologicalMother
 :hasBiologicalMother rdf:type owl:ObjectProperty ;
-                     rdfs:subPropertyOf <https://w3id.org/semanticarts/ns/ontology/gist/hasBiologicalParent> .
+                     rdfs:subPropertyOf <https://w3id.org/semanticarts/ns/ontology/gist/hasBiologicalParent> ;
+                     rdf:type owl:FunctionalProperty .
 
 
 ###  https://w3id.org/semanticarts/ns/ontology/gist/hasBiologicalParent
@@ -63,6 +66,26 @@
                                  ] .
 
 
+###  http://semanticarts.com/ont/bari/Ethnicity
+:Ethnicity rdf:type owl:Class ;
+           rdfs:subClassOf <https://w3id.org/semanticarts/ns/ontology/gist/Category> .
+
+
+###  http://semanticarts.com/ont/bari/HasNativeAmericanAncestry
+:HasNativeAmericanAncestry rdf:type owl:Class ;
+                           owl:equivalentClass [ owl:intersectionOf ( <https://w3id.org/semanticarts/ns/ontology/gist/Person>
+                                                                      [ rdf:type owl:Restriction ;
+                                                                        owl:onProperty :hasAncestor ;
+                                                                        owl:someValuesFrom [ rdf:type owl:Restriction ;
+                                                                                             owl:onProperty <https://w3id.org/semanticarts/ns/ontology/gist/isCategorizedBy> ;
+                                                                                             owl:hasValue :_Ethnicity_NativeAmerican
+                                                                                           ]
+                                                                      ]
+                                                                    ) ;
+                                                 rdf:type owl:Class
+                                               ] .
+
+
 ###  http://semanticarts.com/ont/bari/HumanBiologicalFather
 :HumanBiologicalFather rdf:type owl:Class ;
                        owl:equivalentClass [ owl:intersectionOf ( <https://w3id.org/semanticarts/ns/ontology/gist/Person>
@@ -83,7 +106,8 @@
 :_Andy rdf:type owl:NamedIndividual ,
                 <https://w3id.org/semanticarts/ns/ontology/gist/Person> ;
        :hasBiologicalFather :_Bob ;
-       :hasBiologicalMother :_Betty .
+       :hasBiologicalMother :_Betty ,
+                            :_Elizabeth .
 
 
 ###  http://semanticarts.com/ont/bari/_Astro
@@ -136,7 +160,28 @@
 
 ###  http://semanticarts.com/ont/bari/_Dan
 :_Dan rdf:type owl:NamedIndividual ,
-               <https://w3id.org/semanticarts/ns/ontology/gist/Person> .
+               <https://w3id.org/semanticarts/ns/ontology/gist/Person> ;
+      <https://w3id.org/semanticarts/ns/ontology/gist/isCategorizedBy> :_Ethnicity_NativeAmerican .
+
+
+###  http://semanticarts.com/ont/bari/_Elizabeth
+:_Elizabeth rdf:type owl:NamedIndividual ,
+                     <https://w3id.org/semanticarts/ns/ontology/gist/Person> .
+
+
+###  http://semanticarts.com/ont/bari/_Ethnicity_Asian
+:_Ethnicity_Asian rdf:type owl:NamedIndividual ,
+                           :Ethnicity .
+
+
+###  http://semanticarts.com/ont/bari/_Ethnicity_NativeAmerican
+:_Ethnicity_NativeAmerican rdf:type owl:NamedIndividual ,
+                                    :Ethnicity .
+
+
+###  http://semanticarts.com/ont/bari/_Ethnicity_PacificIslander
+:_Ethnicity_PacificIslander rdf:type owl:NamedIndividual ,
+                                     :Ethnicity .
 
 
 ###  http://semanticarts.com/ont/bari/_House_1
