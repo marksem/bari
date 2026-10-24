@@ -27,8 +27,8 @@ Background and Experience: Participants shouldn’t have to be too technical. So
 
 ## Files
 
-- bari.ttl - Sample completed ontology
-- gist.ttl - Local copy of gist ontology
+- [bari.ttl](./bari.ttl) - Sample completed ontology
+- [gist.ttl](./gist.ttl) - Local copy of gist ontology
 
 
 ## Data set diagrams
