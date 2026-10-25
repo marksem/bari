@@ -33,6 +33,6 @@ Background and Experience: Participants shouldn’t have to be too technical. So
 
 ## Data set diagrams
 
-- Graphical representations of the dataset we are building
+- Graphical representations of the dataset we are building: 
     See the [slides](./slides.pdf).
 
